@@ -8,11 +8,12 @@ jobs:
     if: github.event.repository.private == false
     runs-on: macos-15-intel
     timeout-minutes: 15
-    env:
-      MACUTILITY_TEST_APP: ${{ runner.temp }}/MacUtility.app
-      MACUTILITY_REPORT_DIR: ${{ github.workspace }}/intel-report
     steps:
       - uses: actions/checkout@v4
+      - name: Set test paths
+        run: |
+          printf 'MACUTILITY_TEST_APP=%s\n' "$RUNNER_TEMP/MacUtility.app" >> "$GITHUB_ENV"
+          printf 'MACUTILITY_REPORT_DIR=%s\n' "$GITHUB_WORKSPACE/intel-report" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
         with:
           node-version: 24
