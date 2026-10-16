@@ -1,0 +1,48 @@
+name: Intel release smoke test (public, standard runner)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  intel:
+    if: github.event.repository.private == false
+    runs-on: macos-15-intel
+    timeout-minutes: 15
+    env:
+      MACUTILITY_TEST_APP: ${{ runner.temp }}/MacUtility.app
+      MACUTILITY_REPORT_DIR: ${{ github.workspace }}/intel-report
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Confirm native Intel runner
+        run: test "$(uname -m)" = x86_64
+      - name: Download approved public candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download v0.1.2-rc.1 --repo "$GITHUB_REPOSITORY" --pattern 'MacUtility-0.1.2-x64.dmg' --dir "$RUNNER_TEMP"
+          printf '%s  %s\n' 'e9971e211fe37ad32d29a68dd39dbfaf411bb0ed5e886ab677dac348b943228a' "$RUNNER_TEMP/MacUtility-0.1.2-x64.dmg" | shasum -a 256 -c -
+      - name: Mount DMG and copy packaged app
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/macutility-mount"
+          hdiutil attach "$RUNNER_TEMP/MacUtility-0.1.2-x64.dmg" -readonly -nobrowse -mountpoint "$RUNNER_TEMP/macutility-mount"
+          trap 'hdiutil detach "$RUNNER_TEMP/macutility-mount"' EXIT
+          ditto "$RUNNER_TEMP/macutility-mount/MacUtility.app" "$MACUTILITY_TEST_APP"
+      - name: Install test harness dependency only
+        run: npm install --no-save --package-lock=false --ignore-scripts playwright@1.64.0
+      - name: Run packaged Intel checks
+        run: node qa/intel-smoke.mjs
+      - name: Write job summary
+        if: always()
+        run: |
+          if test -f intel-report/REPORT.md; then cat intel-report/REPORT.md >> "$GITHUB_STEP_SUMMARY"; else printf '%s\n' 'Intel run failed before the app checks. See step logs; no passing app report was produced.' >> "$GITHUB_STEP_SUMMARY"; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: intel-report-${{ github.run_id }}
+          path: intel-report/
+          retention-days: 3
+          if-no-files-found: warn
