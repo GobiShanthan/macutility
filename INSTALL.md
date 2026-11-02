@@ -9,7 +9,7 @@ The $0 release is not signed with an Apple Developer ID and is not notarized by 
 
 ## Manual updates
 
-In Settings choose Open download page. Download the newer build for your architecture, quit MacUtility after any active operation finishes, and replace the app in Applications. The $0 build does not check for or install updates automatically. Keep a current backup before cleanup; updating the app does not recover previously deleted files.
+In Settings choose Open download page. Download the newer build for your architecture, quit MacUtility after any active operation finishes, and replace the app in Applications. The free build checks for newer stable releases automatically and displays a download link when one is available. It does not download or install updates automatically. Keep a current backup before cleanup; updating the app does not recover previously deleted files.
 
 ## Support
 

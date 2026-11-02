@@ -15,7 +15,9 @@ Completed scans replace the prior inventory and retain up to 30 history summarie
 
 ## Updates and third-party connections
 
-The $0 release does not perform background update checks or install updates. Choosing Open download page opens the public GitHub releases page in your browser. You download and replace the app manually. A separate future Developer ID signed build may support automatic checks; that release must identify its actual update behavior.
+The free build checks GitHub's public latest-stable-release API about ten seconds after launch, every six hours while running, and when you choose Check for Updates. These requests include the app version in a User-Agent header and ordinary connection information. No GitHub login or token is sent. Draft and prerelease builds are not offered as stable updates. Checks have a ten-second timeout; connection errors and rate limits are shown in Settings.
+
+A newer compatible release is announced in the app with plain-text release notes and a Download latest version link to the official GitHub release page. Downloads and installation remain manual: quit MacUtility after active operations finish, then replace the app in Applications. No binary is automatically downloaded or installed by this discovery feature. There is currently no separate switch to disable automatic checks; quitting the app stops them. The browser demo and unpackaged development builds do not make automatic release checks.
 
 GitHub and its delivery infrastructure receive ordinary connection/request information such as IP address and request headers. Update requests do not include your scan inventory, scanned paths, or file contents. Third-party tools invoked through Maintenance may make their own connections under their own policies.
 

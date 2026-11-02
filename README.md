@@ -1,35 +1,29 @@
 # MacUtility
 
-Make a little more room on your Mac. MacUtility helps you review storage and
-choose what, if anything, to move to Trash.
+A little more room. A local-first macOS storage utility built by Gobishanthan.
 
-## Download
+## Download and installation
 
-- [Apple silicon](https://github.com/GobiShanthan/macutility/releases/latest/download/MacUtility-0.1.1-arm64.dmg)
-- [Intel](https://github.com/GobiShanthan/macutility/releases/latest/download/MacUtility-0.1.1.dmg)
-
-Open the downloaded DMG and drag MacUtility to Applications. This build is not
-signed or notarized, so macOS may warn when you first open it. Only open the
-app if you trust this publisher.
+Download official builds from [GitHub Releases](https://github.com/GobiShanthan/macutility/releases/latest). Choose Apple Silicon (arm64) or Intel (x64) to match your Mac. Open the DMG and drag MacUtility to Applications. Only install releases from sources you trust. The $0 release is not Apple Developer ID signed or notarized; macOS may warn or block it. See [installation guidance](INSTALL.md).
 
 ## What it does
 
-- Scans folders you explicitly choose and keeps scan data on your Mac.
-- Lets you review files before taking action.
-- Moves selected eligible downloads to Trash only after confirmation.
-- Never permanently deletes files.
+- Scans reachable startup-disk metadata and shows storage categories, file search, and an app inventory.
+- Keeps scan history and action logs locally.
+- Lets you review supported cleanup items with Trash as the default, with an optional permanent-deletion mode.
+- Offers cache/log maintenance and separately confirmed developer-tool cleanup commands.
+- Automatically discovers newer stable releases, with release notes and a download link. Download and replacement of the app remain manual.
 
-Scanning does not change files. Storage figures are estimates and do not
-promise how much space emptying Trash will recover.
+## Before cleanup
 
-## License
+**Cleanup can cause data loss or interrupt apps. Keep a current, tested backup and close affected apps first.** Review the selected paths and consequences. Safe labels describe normal cache/log eligibility, not a guarantee against harm. Scans can be incomplete and size estimates do not guarantee reclaimed space.
 
-MacUtility is proprietary. Official precompiled releases are licensed for
-personal, non-commercial use only. The source code is not included or licensed
-for public use. See [LICENSE](LICENSE) for the full terms.
+Trash recovery is not guaranteed. Permanent deletion bypasses Trash. Developer maintenance commands can permanently remove resources, including Docker data, regardless of the Trash setting. Administrator app removal may not support Finder’s Put Back feature.
 
-## Intel 0.1.2 validation candidate
+The current app does not upload your files or scan results. Release checks at startup and every six hours contact GitHub with the app version and ordinary connection information; opening the download page also contacts GitHub. Scan history and activity logs can contain private paths and may remain after uninstalling. Do not publish unredacted diagnostics in public issues.
 
-The [0.1.2 Intel candidate](https://github.com/GobiShanthan/macutility/releases/tag/v0.1.2-rc.1) passed all 11 packaged-app smoke checks on GitHub's standard Intel macOS 15.7.9 runner. It is a prerelease and does not replace the stable download above. See the [report and screenshots](reports/intel-0.1.2-2026-10-16/README.md).
+## License, privacy, and contact
 
-The candidate adds optional permanent deletion and developer maintenance; those operations can permanently remove data. Keep a current, tested backup. Read the candidate's [license/safety information](TERMS.md), [privacy notice](PRIVACY.md), and [installation guidance](INSTALL.md). The candidate uses ad-hoc signing and manual updates, without Developer ID or notarization.
+MacUtility is proprietary. Official precompiled releases are licensed for personal, non-commercial use only. Source code is not included or licensed for public use. Third-party components retain their own licenses. See [LICENSE](LICENSE).
+
+Read the [license and safety information](TERMS.md) and [privacy notice](PRIVACY.md) before installing or using cleanup. Publisher: Gobishanthan, Markham, Ontario, Canada. Support, privacy, and legal contact: [gobishanthan04@gmail.com](mailto:gobishanthan04@gmail.com). Future paid or AI services require separate disclosures and authorization; this edition does not authorize charges or AI uploads.

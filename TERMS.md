@@ -25,7 +25,7 @@ Scanning reads reachable filesystem metadata without changing the scanned files.
 
 ## Updates and personal information
 
-The $0 release is not Apple Developer ID signed or notarized. It uses manual updates: open the download page in Settings, download the matching build, quit MacUtility, and replace it in Applications. It does not check for or install updates in the background. Update availability depends on published compatible releases and an internet connection. The app does not install AI services or authorize future uploads through this notice. See PRIVACY.md for current data handling.
+The $0 release is not Apple Developer ID signed or notarized. It uses manual updates: open the download page in Settings, download the matching build, quit MacUtility, and replace it in Applications. It checks GitHub for newer stable releases automatically and shows a download link and release notes; it does not download binaries or install updates in the background. Update availability depends on published compatible releases and an internet connection. The app does not install AI services or authorize future uploads through this notice. See PRIVACY.md for current data handling.
 
 ## Warranty and legal rights
 
