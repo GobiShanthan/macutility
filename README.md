@@ -15,9 +15,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/GobiShanthan/macutility/releases/download/v0.1.3/MacUtility-0.1.3-arm64.dmg"><strong>Download for Apple Silicon</strong></a>
+  <a href="https://github.com/GobiShanthan/macutility/releases/download/v0.1.4/MacUtility-0.1.4-arm64.dmg"><strong>Download for Apple Silicon</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/GobiShanthan/macutility/releases/download/v0.1.3/MacUtility-0.1.3-x64.dmg"><strong>Download for Intel</strong></a>
+  <a href="https://github.com/GobiShanthan/macutility/releases/download/v0.1.4/MacUtility-0.1.4-x64.dmg"><strong>Download for Intel</strong></a>
   &nbsp;·&nbsp;
   <a href="https://github.com/GobiShanthan/macutility/releases/latest">All releases</a>
 </p>

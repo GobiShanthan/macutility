@@ -1,0 +1,82 @@
+{
+  "startedAt": "2026-11-02T22:45:11.418Z",
+  "version": "0.1.4",
+  "runner": "GitHub Actions 1000000018",
+  "hostArchitecture": "x86_64",
+  "macOS": "15.7.9",
+  "checks": [
+    {
+      "name": "Bundle integrity",
+      "passed": true,
+      "elapsedMs": 1458
+    },
+    {
+      "name": "Packaged license and notices",
+      "passed": true,
+      "elapsedMs": 21
+    },
+    {
+      "name": "Packaged Intel app launches",
+      "passed": true,
+      "elapsedMs": 3159
+    },
+    {
+      "name": "Intel architecture and version",
+      "passed": true,
+      "elapsedMs": 36
+    },
+    {
+      "name": "Home screen renders",
+      "passed": true,
+      "elapsedMs": 1289
+    },
+    {
+      "name": "Renderer Node isolation",
+      "passed": true,
+      "elapsedMs": 9
+    },
+    {
+      "name": "Real disk information",
+      "passed": true,
+      "elapsedMs": 5
+    },
+    {
+      "name": "Manual updates in free release",
+      "passed": true,
+      "elapsedMs": 536
+    },
+    {
+      "name": "Native scanner enumerates temporary fixture on x64",
+      "passed": true,
+      "elapsedMs": 16
+    },
+    {
+      "name": "Unapproved cleanup and arbitrary commands are refused",
+      "passed": true,
+      "elapsedMs": 42
+    },
+    {
+      "name": "Cancelled and unacknowledged maintenance do not run",
+      "passed": true,
+      "elapsedMs": 24
+    }
+  ],
+  "limitations": [
+    "No physical end-user Mac or downloaded-app Gatekeeper experience is certified.",
+    "Cleanup safeguards are tested by refusal/cancellation; no real user data is removed.",
+    "No whole-volume scan or performance guarantee is tested."
+  ],
+  "runtime": {
+    "architecture": "x64",
+    "version": "0.1.4"
+  },
+  "nativeFixture": {
+    "names": [
+      "keep.txt",
+      "nested"
+    ],
+    "fileSize": 12
+  },
+  "passed": true,
+  "finishedAt": "2026-11-02T22:45:19.211Z"
+}
