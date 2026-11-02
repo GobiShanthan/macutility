@@ -1,6 +1,13 @@
 name: Intel release smoke test (public, standard runner)
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to test, for example v0.1.4 (pre-releases work)
+        required: true
+      sha256:
+        description: SHA-256 of the x64 DMG, from that release's SHA256SUMS file
+        required: true
 permissions:
   contents: read
 jobs:
@@ -11,7 +18,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set test paths
+        env:
+          TAG: ${{ inputs.tag }}
+          SHA256: ${{ inputs.sha256 }}
         run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]] || { echo "Invalid tag: $TAG"; exit 1; }
+          [[ "$SHA256" =~ ^[0-9a-f]{64}$ ]] || { echo "Invalid SHA-256"; exit 1; }
+          version="${TAG#v}"
+          version="${version%%-rc.*}"
+          printf 'MACUTILITY_TAG=%s\n' "$TAG" >> "$GITHUB_ENV"
+          printf 'MACUTILITY_SHA256=%s\n' "$SHA256" >> "$GITHUB_ENV"
+          printf 'MACUTILITY_VERSION=%s\n' "$version" >> "$GITHUB_ENV"
+          printf 'MACUTILITY_DMG=%s\n' "MacUtility-$version-x64.dmg" >> "$GITHUB_ENV"
           printf 'MACUTILITY_TEST_APP=%s\n' "$RUNNER_TEMP/MacUtility.app" >> "$GITHUB_ENV"
           printf 'MACUTILITY_REPORT_DIR=%s\n' "$GITHUB_WORKSPACE/intel-report" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
@@ -23,13 +41,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release download v0.1.2-rc.1 --repo "$GITHUB_REPOSITORY" --pattern 'MacUtility-0.1.2-x64.dmg' --dir "$RUNNER_TEMP"
-          printf '%s  %s\n' 'e9971e211fe37ad32d29a68dd39dbfaf411bb0ed5e886ab677dac348b943228a' "$RUNNER_TEMP/MacUtility-0.1.2-x64.dmg" | shasum -a 256 -c -
+          gh release download "$MACUTILITY_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$MACUTILITY_DMG" --dir "$RUNNER_TEMP"
+          printf '%s  %s\n' "$MACUTILITY_SHA256" "$RUNNER_TEMP/$MACUTILITY_DMG" | shasum -a 256 -c -
       - name: Mount DMG and copy packaged app
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/macutility-mount"
-          hdiutil attach "$RUNNER_TEMP/MacUtility-0.1.2-x64.dmg" -readonly -nobrowse -mountpoint "$RUNNER_TEMP/macutility-mount"
+          hdiutil attach "$RUNNER_TEMP/$MACUTILITY_DMG" -readonly -nobrowse -mountpoint "$RUNNER_TEMP/macutility-mount"
           trap 'hdiutil detach "$RUNNER_TEMP/macutility-mount"' EXIT
           ditto "$RUNNER_TEMP/macutility-mount/MacUtility.app" "$MACUTILITY_TEST_APP"
       - name: Install test harness dependency only

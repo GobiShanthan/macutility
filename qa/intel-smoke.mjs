@@ -7,11 +7,12 @@ import assert from "node:assert/strict";
 const bundle = resolve(
   process.env.MACUTILITY_TEST_APP ?? "release/mac/MacUtility.app",
 );
+const expectedVersion = process.env.MACUTILITY_VERSION ?? "0.1.2";
 const output = resolve(process.env.MACUTILITY_REPORT_DIR ?? "intel-report");
 await mkdir(output, { recursive: true });
 const report = {
   startedAt: new Date().toISOString(),
-  version: "0.1.2",
+  version: expectedVersion,
   runner: process.env.RUNNER_NAME ?? "local",
   hostArchitecture: execFileSync("uname", ["-m"], { encoding: "utf8" }).trim(),
   macOS: execFileSync("sw_vers", ["-productVersion"], {
@@ -85,7 +86,7 @@ try {
       version: app.getVersion(),
     }));
     assert.equal(report.runtime.architecture, "x64");
-    assert.equal(report.runtime.version, "0.1.2");
+    assert.equal(report.runtime.version, expectedVersion);
   });
   await check("Home screen renders", async () => {
     await page
@@ -102,12 +103,17 @@ try {
   });
   await check("Manual updates in free release", async () => {
     const status = await page.evaluate(() => window.macutility.updateStatus());
-    assert.equal(status.phase, "disabled");
-    assert.equal(status.currentVersion, "0.1.2");
+    // 0.1.2 reported "disabled"; 0.1.3+ free builds run release discovery but never download or install.
+    if (status.installation === "manual") {
+      assert.ok(["idle", "checking", "current", "available", "error"].includes(status.phase), status.phase);
+    } else {
+      assert.equal(status.phase, "disabled");
+    }
+    assert.equal(status.currentVersion, expectedVersion);
     await page.getByRole("button", { name: "Settings", exact: true }).click();
     assert.equal(
       await page
-        .getByRole("link", { name: "Open download page" })
+        .getByRole("link", { name: /^(Open download page|Download latest version)$/ })
         .getAttribute("href"),
       "https://github.com/GobiShanthan/macutility/releases/latest",
     );
@@ -217,7 +223,7 @@ try {
     JSON.stringify(report, null, 2) + "\n",
   );
   const lines = [
-    "# MacUtility 0.1.2 Intel packaged-app report",
+    `# MacUtility ${expectedVersion} Intel packaged-app report`,
     `Result: ${report.passed ? "PASS" : "FAIL"}`,
     `Host: ${report.hostArchitecture}; macOS ${report.macOS}`,
     `Started: ${report.startedAt}`,
