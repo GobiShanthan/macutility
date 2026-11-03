@@ -70,12 +70,16 @@ try {
   await check("Packaged Intel app launches", async () => {
     app = await electron.launch({
       executablePath: join(bundle, "Contents/MacOS/MacUtility"),
-      env: Object.fromEntries(
-        Object.entries(process.env).filter(
-          ([key, value]) =>
-            key !== "ELECTRON_RUN_AS_NODE" && value !== undefined,
+      env: {
+        ...Object.fromEntries(
+          Object.entries(process.env).filter(
+            ([key, value]) =>
+              key !== "ELECTRON_RUN_AS_NODE" && value !== undefined,
+          ),
         ),
-      ),
+        // 0.1.5+ offers to move itself into Applications; the runner's copy is in a temp folder.
+        MACUTILITY_SKIP_INSTALL_PROMPTS: "1",
+      },
       timeout: 90000,
     });
   });
