@@ -15,9 +15,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/GobiShanthan/macutility/releases/download/v0.1.4/MacUtility-0.1.4-arm64.dmg"><strong>Download for Apple Silicon</strong></a>
+  <a href="https://github.com/GobiShanthan/macutility/releases/download/v0.1.5/MacUtility-0.1.5-arm64.dmg"><strong>Download for Apple Silicon</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/GobiShanthan/macutility/releases/download/v0.1.4/MacUtility-0.1.4-x64.dmg"><strong>Download for Intel</strong></a>
+  <a href="https://github.com/GobiShanthan/macutility/releases/download/v0.1.5/MacUtility-0.1.5-x64.dmg"><strong>Download for Intel</strong></a>
   &nbsp;·&nbsp;
   <a href="https://github.com/GobiShanthan/macutility/releases/latest">All releases</a>
 </p>
@@ -95,6 +95,7 @@ Full details are in the [privacy notice](PRIVACY.md).
 1. Download the DMG for your Mac — **arm64** for Apple Silicon (M1 and later), **x64** for Intel.
 2. Open it and drag **MacUtility** to **Applications**.
 3. Open MacUtility. These free builds are not notarized by Apple, so macOS may ask you to confirm the first time. Follow [Apple's guidance](https://support.apple.com/en-us/102445) and only continue if you trust the source. Don't disable Gatekeeper globally.
+4. The first time it opens, MacUtility confirms it's installed, offers to **eject the installer** for you, and shows how to keep it in your Dock.
 
 Checksums for every download are attached to each release (`SHA256SUMS-<version>.txt`). See [INSTALL.md](INSTALL.md) for more detail.
 

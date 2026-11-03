@@ -4,7 +4,7 @@ The $0 release is not signed with an Apple Developer ID and is not notarized by 
 
 1. Use the official GitHub release: https://github.com/GobiShanthan/macutility/releases/latest.
 2. Choose arm64 for Apple Silicon or x64 for Intel. Check the release notes for the tested macOS version and known limitations; architecture support is not proof of testing on every Mac.
-3. Open the DMG and drag MacUtility to Applications. Review LICENSE, TERMS.md, and PRIVACY.md before cleanup.
+3. Open the DMG and drag MacUtility to Applications. The first time it opens from Applications, MacUtility offers to eject the installer disk and shows how to keep it in the Dock. If you open it from the installer instead, it offers to move itself into Applications. Review LICENSE, TERMS.md, and PRIVACY.md before cleanup.
 4. If macOS blocks an unidentified/unnotarized app, read Apple's guidance and proceed only if you trust the source: https://support.apple.com/en-us/102445. Managed Macs may not allow an exception. Do not disable Gatekeeper globally. Do not ignore a malware, damaged-app, or tampering alert.
 
 ## Manual updates
